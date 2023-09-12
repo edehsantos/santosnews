@@ -1,0 +1,5 @@
+<h2 class="text-center">ADD A NEW COMMENT</h2>
+<form action="{% url 'post_comment' post.id %}" method="post">
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">ADD COMMENT</button>
+</form>

@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block content %}
+
+
+
+
+
+  <main id="main">
+
+    <section class="single-post-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9 post-content" data-aos="fade-up">
+
+            <!-- ======= Single Post Content ======= -->
+            <div class="single-post">
+              <div class="post-meta"><span class="date">{{ post_det.category.title }}</span> <span class="mx-1">&bullet;</span> <span>{{ post_det.publish|naturaltime }}</span></div>
+              <h1 class="mb-5">{{ post_det.title }}</h1>
+              
+              <figure class="my-4">
+                <img src="{{ post_det.images.url }}" alt="" class="img-fluid">
+                <figcaption><a href="{% url 'post_authors' post_det.author %}">WRITTEN BY: <span class="text-bg-primary">{{ post_det.author|title }}</span></a> </figcaption>
+                <h1 class="text-center"><a href="{% url 'post_share' post_det.id %}" class="nav-link">SHARE THIS POST BY EMAIL </a>
+              </figure>
+              <p class="lead">{{ post_det.body }}</p>
+              <h2 class="lead text-center mt-4">RECOMMENDED POST</h2>
+              {% for posts in similiar_posts %}
+              <figure class="my-4">
+                <img src="{{ posts.images.url }}" alt="" class="img-fluid">
+                <figcaption><a href="{% url 'post_authors' post_det.author %}">WRITTEN BY: <span class="text-bg-primary">{{ post_det.author|title }}</span></a> </figcaption>
+                <h1 class="text-center"><a href="{{ posts.get_absolute_url }}" class="nav-link">{{ posts.title }}</a>
+                <h1 class="text-center"><a href="{{ posts.get_absolute_url }}" class="nav-link">READ HERE </a>
+              </figure>
+              {% empty %}
+              <h1 class="text-center mt-4">THERE ARE NO SIMILIAR POSTS</h1>
+              {% endfor %}
+              
+             
+               
+            </div><!-- End Single Post Content -->
+            <div class="text-center mt-4">
+              
+            <div class="mt-4 mx-auto">
+              {% with comments.count as total_comments %}
+              <h2 class="text-center">{{ total_comments}} comment{{ total_comments|pluralize }}
+                {% endwith %}
+                {% for comment in comments %}
+                <h1 class="text-center mt-4 lead">Comment {{ forloop.counter }} by {{ comment.name }}</h1>
+                <h1 class="text-center mt-4 lead">{{ comment.created|naturaltime }}</h1>
+                <h1 class="text-center mt-4 lead">{{ comment.body|linebreaks }}</h1>
+                {% empty %}
+                <h1 class="text-center lead">THERE ARE NO COMMENTS ADD A COMMENT</h1>
+                {% endfor %}
+              {% for message in messages %}
+<div class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="True">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+              <form method="post" class="shadow-lg p-3 mb-5 bg-body rounded">
+                {% csrf_token %}
+
+          {{ form|crispy }}
+          <button type="submit" class="btn btn-primary mt-4">ADD COMMENT</button>
+        </form>
+
+            </div>
+          
+            </div>
+          
+           
+          </div>
+          <div class="col-md-3">
+            <!-- ======= Sidebar ======= -->
+            <div class="aside-block">
+
+              <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Popular</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="false">Trending</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill" data-bs-target="#pills-latest" type="button" role="tab" aria-controls="pills-latest" aria-selected="false">Latest</button>
+                </li>
+              </ul>
+
+              <div class="tab-content" id="pills-tabContent">
+
+                <!-- Popular -->
+                <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                    <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
+                    <span class="author mb-3 d-block">Jenny Wilson</span>
+                  </div>
+
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                    <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2>
+                    <span class="author mb-3 d-block">Jenny Wilson</span>
+                  </div>
+
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                    <h2 class="mb-2"><a href="#">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2>
+                    <span class="author mb-3 d-block">Jenny Wilson</span>
+                  </div>
+
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                    <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2>
+                    <span class="author mb-3 d-block">Jenny Wilson</span>
+                  </div>
+
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                    <h2 class="mb-2"><a href="#">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2>
+                    <span class="author mb-3 d-block">Jenny Wilson</span>
+                  </div>
+
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                    <h2 class="mb-2"><a href="#">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
+                    <span class="author mb-3 d-block">Jenny Wilson</span>
+                  </div>
+                </div> <!-- End Popular -->
+
+                <!-- Trending -->
+                <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
+                  {% for post in post_trending %}
+                  <div class="post-entry-1 border-bottom">
+                 
+                    <div class="post-meta"><span class="date">{{ post.category.title }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.publish }}</span></div>
+                    <h2 class="mb-2"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                    <span class="author mb-3 d-block">{{ post.author }}</span>
+                  </div>
+              {% endfor %}
+                 
+
+                  
+                </div> <!-- End Trending -->
+
+                <!-- Latest -->
+                <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
+                  {% for latest in recent %}
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta"><span class="date"></span> <span class="mx-1">&bullet;</span> <span>{{ latest.publish }}</span></div>
+                    <h2 class="mb-2"><a href="{{ latest.get_absolute_url }}">{{ latest.title }}</a></h2>
+                    <span class="author mb-3 d-block">{{ latest.author }}</span>
+                  </div>
+{% endfor %}
+                  
+                  
+
+                </div> <!-- End Latest -->
+
+              </div>
+            </div>
+
+            <div class="aside-block">
+              <h3 class="aside-title">Video</h3>
+              <div class="video-post">
+                <a href="https://www.youtube.com/watch?v=AiFfDjmd0jU" class="glightbox link-video">
+                  <span class="bi-play-fill"></span>
+                  <img src="assets/img/post-landscape-5.jpg" alt="" class="img-fluid">
+                </a>
+              </div>
+            </div><!-- End Video -->
+
+            <div class="aside-block">
+              <h3 class="aside-title">Categories</h3>
+              <ul class="aside-links list-unstyled">
+                {% for category in all_category %}
+                <li><a href="{% url 'category_details' category.slug %}"><i class="bi bi-chevron-right"></i>{{ category.title }}</a></li>
+                {% endfor %}
+                
+              </ul>
+            </div><!-- End Categories -->
+
+            <div class="aside-block">
+              <h3 class="aside-title">Tags</h3>
+              
+            </div><!-- End Tags -->
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+  {% endblock content %}
