@@ -32,7 +32,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -110,11 +110,11 @@ WSGI_APPLICATION = 'Good_lifes.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
+        'NAME': 'Hard',
         'USER': 'postgres',
-        'PORT': '6600',
-        'HOST':  'containers-us-west-101.railway.app',
-        'PASSWORD': 'MZEyV3lLwYClPtwUgK4i',
+        'PORT': '5432',
+        'HOST': '127.0.0.1',
+        'PASSWORD': '1232478847',
     }
 }
 
